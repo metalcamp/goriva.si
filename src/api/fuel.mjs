@@ -1,0 +1,17 @@
+import fetch from "node-fetch";
+import {BASE_URL} from "./config.mjs";
+
+const fuelCodeList = async () => {
+    const response = await fetch(`${BASE_URL}/v1/fuel`);
+
+    if (response.status !== 200) {
+        throw new Error("could not fetch data from goriva.si")
+    }
+
+    return response.json();
+}
+
+export {
+    fuelCodeList
+}
+
