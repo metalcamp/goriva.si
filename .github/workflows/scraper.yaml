@@ -1,0 +1,31 @@
+name: Simple pipeline to run scraper and store data to file
+on:
+    push:
+        branches: [ master ]
+    schedule:
+        -   cron: "0 0-23 * * *"
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+                with:
+                    ref: master
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v1
+                with:
+                    node-version: 16.x
+
+            -   name: Install dependencies
+                run: |
+                npm install -g yarn
+                yarn
+
+            -   name: Build
+                run: yarn build --if-present
+
+            -   name: Run scraper
+                run: node index.mjs
