@@ -1,9 +1,7 @@
 name: Simple pipeline which runs scraper and stores scraped data to file
 on:
-    push:
-        branches: [ master ]
     schedule:
-        -   cron: "0 0-23 * * *"
+        -   cron: "0 * * * *"
 
 jobs:
     build:
