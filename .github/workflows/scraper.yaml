@@ -1,4 +1,4 @@
-name: Simple pipeline to run scraper and store data to file
+name: Simple pipeline which runs scraper and stores scraped data to file
 on:
     push:
         branches: [ master ]
@@ -20,12 +20,20 @@ jobs:
                     node-version: 16.x
 
             -   name: Install dependencies
-                run: |
-                npm install -g yarn
-                yarn
-
-            -   name: Build
-                run: yarn build --if-present
+                run: which yarn || npm install -g yarn && yarn
 
             -   name: Run scraper
                 run: node index.mjs
+
+            -   name: Commit files
+                run: |
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "GitHub Action"
+                  git add -A
+                  git commit -m "update data" -a
+
+            -   name: Push changes
+                uses: ad-m/github-push-action@v0.6.0
+                with:
+                    github_token: ${{ secrets.GH_TOKEN }}
+                    branch: master
