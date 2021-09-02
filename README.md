@@ -1,3 +1,3 @@
 # goriva.si
 
-Simple [goriva.si](https://goriva.si/) API prices scraper written in nodejs
+Simple [goriva.si](https://goriva.si/) API scraper written in nodejs
